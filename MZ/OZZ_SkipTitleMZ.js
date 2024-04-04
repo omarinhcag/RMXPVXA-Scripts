@@ -8,6 +8,14 @@
  * @command callLoad
  * @text Call Load Menu
  * @desc Opens the load screen.
+ * 
+ * @command saveExists
+ * @text Get Save Exists
+ * @desc Check if any savefile exists and store the result as a switch.
+ * @arg switchId
+ * @type switch
+ * @text Switch ID
+ * @desc True if a savefile exists, false otherwise.
  */
 
 (()=>{
@@ -17,6 +25,11 @@
 
     PluginManager.registerCommand(PLUGIN_NAME, "callLoad", args => {
         SceneManager.push(Scene_Load);
+    });
+    PluginManager.registerCommand(PLUGIN_NAME, "saveExists", args => {
+        let v = DataManager.isAnySavefileExists();
+        let sId = Number(args.switchId);
+        $gameSwitches.setValue(sId, v);
     });
 
     DataManager.isTitleSkip = function() {
